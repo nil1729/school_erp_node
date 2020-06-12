@@ -11,6 +11,7 @@ const csv = require('csvtojson');
 const Class = require('../models/Class');
 const User = require('../models/User');
 const bcrypt = require('bcrypt'); 
+const Subject = require('../models/Subject');
 
 // File Filter Setup
 const fileFilter = (req, file, cb) => {
@@ -121,6 +122,8 @@ router.post('/student-csv', (req, res) => {
                     }
                 });
                 classes.forEach(async c => {
+                    const rem = await Class.findOne({className: c.name});
+                    c.students = c.students.concat(rem.students);
                     await Class.updateOne({className: c.name}, {$set: {students: c.students}});
                 });
                 fs.unlink(filePath, async (e)=> {
@@ -306,6 +309,114 @@ router.get('/teachers', async (req, res) => {
     const teachers = await User.find({role: 'teacher'}).sort({name: 1});
     res.render('admin/teachers', {teachers});
 });
+
+const jsonToCSVSubject = async () => {
+    const subjects = await Subject.find();
+    const fields = ['title', 'code', 'className', 'class_ID'];
+    const opts = { fields };
+    const parser = new Parser(opts);
+    const csvData = parser.parse(subjects);
+    fs.writeFileSync('./public/exports/subject.csv', csvData);
+};
+
+// Add Single Subject
+router.get('/subject-add', async(req, res) => {
+    await jsonToCSVSubject()
+    const classes = await Class.find().sort({className: 1});
+    const teachers = await User.find({role: 'teacher'}).sort({name: -1});
+    res.render('forms/subject_add', {classes, teachers});
+});
+
+// Add Single Subjects POST
+router.post('/subject-add', async(req, res) => {
+    try {
+        let c = await Class.findById(req.body.class_ID).select('className');
+        const {title, class_ID, teachers, code} = req.body;
+        let subject = new Subject({
+            title,
+            class_ID,
+            className: c.className,
+            teachers,
+            code
+        });
+        subject = await subject.save();
+        res.json({subject});
+    } catch (e) {
+        console.log(e);
+         res.redirect('back');
+    }
+});
+
+// ADD Subjects via CSV
+router.get('/subject-csv', async(req, res) => {
+    await jsonToCSVSubject()
+    res.render('forms/subject_csv');
+});
+
+// Add Subjects via CSV POST
+router.post('/subject-csv', async(req, res) => {
+    upload(req, res, async (err) => {
+        if (err) {
+              res.render('forms/subject_csv', {error: err});
+        }else if(typeof req.file === 'undefined'){
+              res.render('forms/subject_csv', {error: 'No file Selected'});
+        }else{
+            let filePath = `${req.file.destination}/${req.file.filename}`;
+            let jsonArray = await csv().fromFile(filePath);
+            try {
+                const updateArray = async () => {
+                    jsonArray.forEach(async sb => {
+                        let c = await Class.findOne({className: sb.className}).select('_id');
+                        sb.class_ID = c._id;
+                        let subject = new Subject(sb);
+                        await subject.save();
+                        console.log(subject);
+                    });
+                }
+                await updateArray();
+                fs.unlink(filePath, async (e)=> {
+                    if(e){
+                        console.log(e);
+                        return res.render('forms/subject_csv', {error: 'Server Error'});
+                    }else{
+                        //  res.json({jsonArray});
+                        return res.render('forms/subject_csv', {error: 'File Uploaded Successfully'});
+                    }
+                });
+            } catch (e) {
+                console.log(e);
+                fs.unlink(filePath, async(e) => {
+                    if(e){
+                        return res.render('forms/subject_csv', {error: 'Server Error'});
+                    }
+                    return res.render('forms/subject_csv', {error: 'Duplicate Data Found'});
+                });
+            } 
+        }
+      });
+});
+
+// Get Subject Details
+router.get('/subjects', async (req, res) => {
+    const subjects = await Subject.find().populate('class_ID').sort({className: -1});
+    const classes = await Class.find().sort({className: 1});
+    const teachers = await User.find({role: 'teacher'}).sort({name: -1});
+    res.render('admin/subjects', {subjects, teachers, classes});
+});
+
+// Update Subject Teachers only
+router.post('/subject/:id/teachers', async (req, res) => {
+    try {
+        let subject = await Subject.findById(req.params.id);
+        subject.teachers = subject.teachers.concat(req.body.teachers);
+        subject = await Subject.updateOne({_id: subject._id}, subject);
+        res.json({subject}); 
+    } catch (e) {
+        console.log(e);
+        res.redirect('back');
+    }
+});
+
 
 
 module.exports = router

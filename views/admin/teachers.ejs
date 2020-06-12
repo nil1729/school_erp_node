@@ -1,7 +1,16 @@
 <%- include ('../partials/_header')  %>
 <%- include ('../partials/_navbar')  %>
 <h4 class="center" style="padding: 10px 0;">TEACHERS</h4>
-<div class="container center" style="width: 95vw;"> 
+<div class="container center" style="width: 95vw;">
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="input-field col s10">
+                <i class="material-icons prefix">search</i>
+                <input id="icon_prefix" type="text" class="validate search">
+                <label for="icon_prefix">Search</label>
+            </div>
+        </div>
+    </div>
     <table class="centered responsive-table highlight" style="border: 1px solid rgb(211, 208, 208);">
         <thead>
           <tr>
@@ -16,17 +25,18 @@
         </thead>
         <tbody>
             <% teachers.forEach(t => { %>
-            <tr>
-                <td><%= t.name  %></td>
-                <td><%= t.email  %></td>
-                <td><%= t.phone  %></td>
-                <td><%= t.subject  %></td>
-                <td><%= t.instructor  %></td>
-                <td><%= t.qualification  %></td>
-                <td><%= t.address  %></td>
+            <tr class="show">
+                <td class="s_filter"><%= t.name  %></td>
+                <td class="s_filter"><%= t.email  %></td>
+                <td class="s_filter"><%= t.phone  %></td>
+                <td class="s_filter"><%= t.subject  %></td>
+                <td class="s_filter"><%= t.instructor  %></td>
+                <td class="s_filter"><%= t.qualification  %></td>
+                <td class="s_filter"><%= t.address  %></td>
             </tr>
             <% }) %> 
         </tbody>
     </table>
 </div>
+<script src="/js/filterList.js"></script>
 <%- include ('../partials/_footer')  %>  

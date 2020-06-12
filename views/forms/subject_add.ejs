@@ -1,0 +1,65 @@
+<%- include ('../partials/_header')  %>
+<%- include ('../partials/_navbar')  %>
+<h4 class="center" style="padding: 10px 0;">Create Subject</h4>
+<div class="container"> 
+    <div class="row">
+        <h5 style="margin: 0 0 10px 0;">Add a Single Subject</h5>
+        <form class="col s12" action="/admin/subject-add" method="POST">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input name="title" required type="text" class="validate" >
+                    <label>Subject Title</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input name="code" required type="text" class="validate">
+                    <label>Subject Code</label>
+                    <span class="helper-text">eg. eng-9</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <select name="class_ID">
+                        <option value="" disabled selected>Choose your option</option>  
+                        <% classes.forEach(c => { %>
+                          <option value="<%= c._id  %>"><%= c.className  %></option> 
+                          <% }) %> 
+                      </select>
+                      <label>Class Select</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <select multiple name="teachers">
+                        <option value="" disabled selected>Choose your option</option>
+                        <% teachers.forEach(t => { %>
+                            <option value="<%= t._id  %>"><%= t.name  %></option> 
+                        <% }) %>
+                      </select>
+                    <label>Teachers for this Subject</label>
+                </div>
+            </div>
+            <div class="row center">
+                <button class="btn waves-effect waves-light" type="submit">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="row" style="margin-top: 3em;">
+        <div style="margin-top: 5px;" class="col s12 m4">
+            <h5>Add Subjects by CSV Files</h5> 
+        </div>
+        <div style="margin-top: 5px;" class="col s12 m3">
+            <a class="red waves-effect waves-light btn" href="/admin/subject-csv"><i class="material-icons right">file_upload</i>Import CSV</a>
+        </div>
+        <div style="margin-top: 5px;" class="col s12 m3">
+            <a href="/exports/subject.csv" class="green waves-effect waves-light btn" download><i class="material-icons right">file_download</i>Export CSV</a>
+        </div>
+    </div>
+</div>
+<% if(typeof errors !== 'undefined') { %>
+    <% errors.forEach(msg => { %>
+        <script>
+              M.toast({html: '<%= msg %>'});
+        </script>
+   <% }) %> 
+<% } %>  
+<%- include ('../partials/_footer')  %>  

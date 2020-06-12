@@ -1,0 +1,117 @@
+<%- include ('../partials/_header')  %>
+<%- include ('../partials/_navbar')  %>
+<h4 class="center" style="padding: 10px 0;">SUBJECTS</h4>
+<div class="container center" style="width: 95vw;">
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="input-field col s10">
+                <select name="class" onchange="changeClass(this.value)">
+                  <option value="" disabled selected>Choose Class</option>
+                  <% classes.forEach(c => { %>
+                    <option value="<%= c.className  %>"><%= c.className  %></option> 
+                    <% }) %>  
+                </select>
+                <label>Class Select</label>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <div class="input-field col s10">
+                <i class="material-icons prefix">search</i>
+                <input id="icon_prefix" type="text" class="validate search">
+                <label for="icon_prefix">Search</label>
+            </div>
+        </div>
+    </div>
+    <table class="centered responsive-table highlight" style="border: 1px solid rgb(211, 208, 208);">
+        <thead>
+          <tr>
+              <th>Code</th>
+              <th>Title</th>
+              <th>Class</th>
+              <th>No. of Teachers</th>
+              <th>No. of Students</th>
+              <th class="green-text">Add Teacher</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% subjects.forEach(sb => { %>
+            <tr class="<%= sb.className  %> table-row show">
+                <td class="s_filter"><%= sb.code  %></td>
+                <td class="s_filter"><%= sb.title  %></td>
+                <td><%= sb.className  %></td>
+                <td><%= sb.teachers.length  %></td>
+                <td><%= sb.class_ID.students.length  %></td>
+                <td><a href="#<%= sb._id  %>" class="modal-trigger waves-effect waves-light btn-small indigo"><i class="material-icons">person_add</i></a></td>
+            </tr>
+            <% }) %> 
+        </tbody>
+    </table>
+</div>
+<% subjects.forEach(sb => { %>
+    <div id="<%= sb._id  %>" class="modal modal-fixed-footer">
+        <div class="modal-content">
+          <h4 class="center" style="margin-bottom: 10px;">Add Teacher for Subject</h4>
+          <div class="row">
+              <form action="/admin/subject/<%= sb._id  %>/teachers" method="POST" class="col s12">
+                  <div class="row">
+                    <div class="input-field col s12 m6">
+                    <select required multiple name="teachers">
+                        <option value="" disabled selected>Choose teachers</option>
+                        <% teachers.forEach(t => { %>
+                            <% if(sb.teachers.includes(t._id)) { %>
+                                <option selected value="<%= t._id  %>"><%= t.name  %></option>
+                            <% }else{ %>
+                                <option value="<%= t._id  %>"><%= t.name  %></option>
+                            <% } %>   
+                        <% }) %>
+                      </select>
+                    <label>Teachers for this Subject</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12 m6">
+                        <button class="btn waves-effect waves-light" type="submit">Submit
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                  </div>
+              </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+<% }) %> 
+<div id="modal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4 class="center" style="margin-bottom: 10px;">Add Teacher for Subject</h4>
+      <div class="row">
+          <form action="" class="col s12">
+              <div class="row">
+                <div class="input-field col s12 m6">
+                <select multiple name="teachers">
+                    <option value="" disabled selected>Choose teachers</option>
+                    <% teachers.forEach(t => { %>
+                        <option value="<%= t._id  %>"><%= t.name  %></option> 
+                    <% }) %>
+                  </select>
+                <label>Teachers for this Subject</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12 m6">
+                    <button class="btn waves-effect waves-light" type="submit">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+              </div>
+          </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+</div>
+<script src="/js/filterList.js"></script>
+<%- include ('../partials/_footer')  %>  
