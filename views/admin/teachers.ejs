@@ -1,0 +1,32 @@
+<%- include ('../partials/_header')  %>
+<%- include ('../partials/_navbar')  %>
+<h4 class="center" style="padding: 10px 0;">TEACHERS</h4>
+<div class="container center" style="width: 95vw;"> 
+    <table class="centered responsive-table highlight" style="border: 1px solid rgb(211, 208, 208);">
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Email Address</th>
+              <th>Phone Number</th>
+              <th>Subject Handling</th>
+              <th>Class Instructor</th>
+              <th>Qualification</th>
+              <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% teachers.forEach(t => { %>
+            <tr>
+                <td><%= t.name  %></td>
+                <td><%= t.email  %></td>
+                <td><%= t.phone  %></td>
+                <td><%= t.subject  %></td>
+                <td><%= t.instructor  %></td>
+                <td><%= t.qualification  %></td>
+                <td><%= t.address  %></td>
+            </tr>
+            <% }) %> 
+        </tbody>
+    </table>
+</div>
+<%- include ('../partials/_footer')  %>  

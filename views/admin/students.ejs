@@ -1,0 +1,98 @@
+<%- include ('../partials/_header')  %>
+<%- include ('../partials/_navbar')  %>
+<h4 class="center" style="padding: 10px 0;">STUDENTS</h4>
+<div class="container center" style="width: 95vw;">
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="input-field col s10">
+                <select name="class" onchange="changeClass(this.value)">
+                  <option value="" disabled selected>Choose your option</option>  
+                  <% classes.forEach(c => { %>
+                    <option value="<%= c.className  %>"><%= c.className  %></option> 
+                    <% }) %> 
+                </select>
+                <label>Class Select</label>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <div class="input-field col s10">
+                <i class="material-icons prefix">search</i>
+                <input id="icon_prefix" type="text" class="validate search">
+                <label for="icon_prefix">Search</label>
+            </div>
+        </div>
+    </div>
+    <table class="centered responsive-table highlight" style="border: 1px solid rgb(211, 208, 208);">
+        <thead>
+          <tr>
+              <th>School ID</th>
+              <th>Name</th>
+              <th>Class</th>
+              <th>Email Address</th>
+              <th>Phone Number</th>
+              <th>Gaurdian</th>
+              <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% classes.forEach(c => { %>
+                <% c.students.forEach(s => { %>
+                    <tr class="<%= s.class %> table-row show">
+                        <td class="s_filter"><%= s.school_ID  %></td>
+                        <td class="s_filter"><%= s.firstName  %> <%= s.lastName %></td>
+                        <td><%= s.class  %></td>
+                        <td class="s_filter"><%= s.email  %></td>
+                        <td class="s_filter"><%= s.phone  %></td>
+                        <td class="s_filter"><%= s.guardian %></td>
+                        <td class="s_filter"><%= s.address  %></td>
+                    </tr>
+                <% }) %> 
+            <% }) %> 
+        </tbody>
+    </table>
+</div>
+<script>
+    const filterList = e => {
+        const data = document.querySelectorAll('.show .s_filter');
+        const text = e.target.value;
+        if(text === ''){
+            data.forEach(item => {
+                item.style.color = '';
+                item.style.fontWeight = 'normal';
+            });
+        }else{
+            data.forEach(item => {
+            const lwCase = item.textContent.toLowerCase();
+            if(lwCase.indexOf(text) > -1){
+                item.style.color = 'red';
+                item.style.fontWeight = '600';
+            }else{
+                item.style.color = '';
+                item.style.fontWeight = 'normal';
+            }
+            });
+        }
+    };
+    const rows = document.querySelectorAll('.table-row');
+    const search = document.querySelector('.search');
+    search.addEventListener('keyup', filterList)
+    window.onload = () => {
+        rows.forEach(function (row) {
+           if(row.classList[0] !== '<%= classes[0].className %>'){
+               row.style.display = 'none';
+               row.classList.remove('show');
+           }
+        });
+    }
+    function changeClass (e) {
+        rows.forEach(function (row) {
+            row.style.display = '';
+            row.classList.add('show');
+           if(row.classList[0] !== e){
+               row.style.display = 'none';
+               row.classList.remove('show');
+           }
+        });
+    };
+</script>
+<%- include ('../partials/_footer')  %>  

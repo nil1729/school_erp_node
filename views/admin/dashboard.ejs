@@ -1,0 +1,32 @@
+<%- include ('../partials/_header')  %>
+<%- include ('../partials/_navbar')  %>
+<h4 class="center" style="padding: 10px 0;">DASHBOARD</h4>
+<div class="container"> 
+    <div class="row">
+        <div class="col s12 m4">
+            <div class="card border-r-10 orange lighten-2">
+                <div class="card-content white-text">
+                   <h4>Students</h4>
+                   <h2 class="f-w-900"><%= student  %></h2>
+                </div>
+              </div>
+        </div>
+        <div class="col s12 m4">
+            <div class="card border-r-10 red lighten-1">
+                <div class="card-content white-text">
+                    <h4>Teachers</h4>
+                    <h2 class="f-w-900"><%= teacher %></h2>
+                </div>
+              </div>
+        </div>
+        <div class="col s12 m4">
+            <div class="card border-r-10 light-green">
+                <div class="card-content white-text">
+                    <h4>Classes</h4>
+                    <h2 class="f-w-900"><%=  CLASS  %></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include ('../partials/_footer')  %>  

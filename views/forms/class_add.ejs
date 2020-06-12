@@ -1,0 +1,54 @@
+<%- include ('../partials/_header')  %>
+<%- include ('../partials/_navbar')  %>
+<h4 class="center" style="padding: 10px 0;">Create Class</h4>
+<div class="container"> 
+    <div class="row">
+        <h5 style="margin: 0 0 10px 0;">Add a Single Class</h5>
+        <form class="col s12" action="/admin/class-add" method="POST">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input name="className" required type="text" class="validate" >
+                    <label>Class Name</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input name="classRoomNo" required type="number" min="1" max="100" class="validate">
+                    <label>Class Room No.</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input name="location" required class="validate" type="text">
+                    <label for="phoneNumber">Location</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input required name="teacherInCharge" type="text" class="validate">
+                    <label>Teacher-in-Charge</label>
+                </div>
+            </div>
+            <div class="row center">
+                <button class="btn waves-effect waves-light" type="submit">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="row" style="margin-top: 3em;">
+        <div style="margin-top: 5px;" class="col s12 m4">
+            <h5>Add Classes by CSV Files</h5> 
+        </div>
+        <div style="margin-top: 5px;" class="col s12 m3">
+            <a class="red waves-effect waves-light btn" href="/admin/class-csv"><i class="material-icons right">file_upload</i>Import CSV</a>
+        </div>
+        <div style="margin-top: 5px;" class="col s12 m3">
+            <a href="/exports/class.csv" class="green waves-effect waves-light btn" download><i class="material-icons right">file_download</i>Export CSV</a>
+        </div>
+    </div>
+</div>
+<% if(typeof errors !== 'undefined') { %>
+    <% errors.forEach(msg => { %>
+        <script>
+              M.toast({html: '<%= msg %>'});
+        </script>
+   <% }) %> 
+<% } %>  
+<%- include ('../partials/_footer')  %>  

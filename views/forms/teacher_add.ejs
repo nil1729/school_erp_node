@@ -1,0 +1,86 @@
+<%- include ('../partials/_header')  %>
+<%- include ('../partials/_navbar')  %>
+<h4 class="center" style="padding: 10px 0;">Create Teacher</h4>
+<div class="container"> 
+    <div class="row">
+        <h5>Add a Single Teacher</h5>
+        <form class="col s12" action="/admin/teacher-add" method="POST">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input name="name" required type="text" class="validate" >
+                    <label>Full Name</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input required name="email" type="email" class="validate">
+                    <label for="email">Email Address</label>
+                    <span class="helper-text">abc@gmail.com</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input name="address" required class="validate" type="text" >
+                    <label for="address">Address</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input name="phone" required class="validate" type="number" >
+                    <label for="phoneNumber">Phone Number</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <select required name="subject">
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="English">English</option>
+                        <option value="Physics">Physics</option>      
+                        <option value="Chemistry">Chemistry</option>  
+                        <option value="Mathematics">Mathematics</option>  
+                        <option value="Statistics">Statistics</option>  
+                    </select>
+                    <label>Subject Handling</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <select required name="instructor">
+                      <option value="" disabled selected>Choose your option</option>
+                      <% classes.forEach(c => { %>
+                        <option value="<%= c.className  %>"><%= c.className  %></option> 
+                        <% }) %> 
+                    </select>
+                    <label>Class Instructor</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input name="password" required class="validate" type="password" >
+                    <label>Password</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <select required name="qualification">
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="PGT">Post Graduate Teacher</option>
+                        <option value="GT">Graduate Teacher</option>
+                        <option value="HM">Principle of Institution</option>        
+                    </select>
+                    <label>Qualification</label>
+                </div>
+            </div>
+            <div class="row center">
+                <button class="btn waves-effect waves-light" type="submit">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div style="margin-top: 5px;" class="col s12 m4">
+            <h5>Add Teachers by CSV Files</h5> 
+        </div>
+        <div style="margin-top: 5px;" class="col s12 m3">
+            <a class="red waves-effect waves-light btn" href="/admin/teacher-csv"><i class="material-icons right">file_upload</i>Import CSV</a>
+        </div>
+        <div style="margin-top: 5px;" class="col s12 m3">
+            <a href="/exports/teacher.csv" class="green waves-effect waves-light btn" download><i class="material-icons right">file_download</i>Export CSV</a>
+        </div>
+    </div>
+</div>
+
+<%- include ('../partials/_footer')  %>  

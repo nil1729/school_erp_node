@@ -1,0 +1,37 @@
+<%- include ('../partials/_header')  %>
+<%- include ('../partials/_navbar')  %>
+<h4 class="center" style="padding: 10px 0;">Create Teachers via CSV</h4>
+<div class="container"> 
+    <div class="row">
+        <h5>Add Teachers by CSV File</h5>
+        <form action="" class="col s12 center" method="POST" action="/admin/teacher-csv" enctype="multipart/form-data">
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>CSV File</span>
+                    <input type="file" name="csv">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" name="csv-title">
+                </div>
+            </div>
+        <button class="btn waves-effect waves-light" style="margin-top: 1em;" type="submit"><i class="large material-icons right">send</i>Upload</button>
+        </form>
+    </div>
+    <div class="row" style="margin-top: 5em;">
+        <p class="flow-text col s12 m4" style="margin: 0; font-size: 1.2em; padding: 0;">Export CSV first to understand Structure</p>
+        <div class="col s12 m3">
+            <a href="/exports/teacher.csv" class="green btn-small waves-effect waves-light btn" download><i class="material-icons right">file_download</i>Export CSV</a>
+        </div>
+    </div>
+</div>
+<% if(typeof error !== 'undefined' && error != '') { %>
+    <script>
+        let error = '<%= error %>';
+        if(error.includes('Error:')){
+            error = error.slice(7);
+        }
+        M.toast({html: error});
+    </script>
+    <% } %>   
+
+<%- include ('../partials/_footer')  %>  
