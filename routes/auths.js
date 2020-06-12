@@ -32,4 +32,9 @@ router.post('/login', passport.authenticate('local', {
     failureRedirect: '/'
 }),(req, res) => {});
 
+
+router.get('/logout', async (req, res) => {
+    req.logOut();
+    res.redirect('/');
+});
 module.exports = router;

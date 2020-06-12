@@ -1,0 +1,46 @@
+<%- include ('../partials/_header')  %>
+<%- include ('../partials/_navbar')  %>
+<h4 class="center" style="padding: 10px 0;">Create Exams</h4>
+<div class="container"> 
+    <div class="row">
+        <h5 style="margin: 0 0 10px 0;">Add a Exam</h5>
+        <form class="col s12" action="/admin/exam-add" method="POST">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input name="title" required type="text" class="validate" >
+                    <label>Exam Name</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <select name="subjects" multiple>
+                        <option value="" disabled selected>Choose your option</option>
+                        <% subjects.forEach(sb => { %>
+                            <option value="<%= sb._id  %>"><%= sb.title  %> (<%= sb.code  %>)</option>
+                        <% })  %>  
+                    </select>
+                    <label>Subjects</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <select name="classes" multiple>
+                        <option value="" disabled selected>Choose your option</option>
+                        <% classes.forEach(c => { %>
+                            <option value="<%= c._id %>"><%= c.className %></option>
+                        <% })  %> 
+                      </select>
+                      <label>Classes</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input name="date" required type="date" class="validate" value="">
+                    <label>Start Date</label>
+                </div>
+            </div>
+            <div class="row center">
+                <button class="btn waves-effect waves-light" type="submit">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<%- include ('../partials/_footer')  %>  

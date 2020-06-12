@@ -12,6 +12,8 @@ const Class = require('../models/Class');
 const User = require('../models/User');
 const bcrypt = require('bcrypt'); 
 const Subject = require('../models/Subject');
+const Exam = require('../models/Exam');
+const moment = require('moment');
 
 // File Filter Setup
 const fileFilter = (req, file, cb) => {
@@ -45,7 +47,8 @@ router.get('/dashboard', async (req, res) => {
     const students = await Student.find();
     const classes = await Class.find();
     const teacher = await User.find({role: 'teacher'});
-    return res.render('admin/dashboard', {student: students.length, CLASS: classes.length, teacher: teacher.length});
+    const exams = await Exam.find({startDate: {$gte: new Date()}});
+    return res.render('admin/dashboard', {student: students.length, CLASS: classes.length, teacher: teacher.length, exam: exams.length});
 });
 
 const jsonToCSV = async () => {
@@ -370,7 +373,6 @@ router.post('/subject-csv', async(req, res) => {
                         sb.class_ID = c._id;
                         let subject = new Subject(sb);
                         await subject.save();
-                        console.log(subject);
                     });
                 }
                 await updateArray();
@@ -417,6 +419,35 @@ router.post('/subject/:id/teachers', async (req, res) => {
     }
 });
 
+// Exam Add Routes 
+router.get('/exam-add', async (req, res) => {
+    const subjects = await Subject.find().populate('class_ID').sort({className: -1});
+    const classes = await Class.find().sort({className: 1});
+    res.render('forms/exam_add', {subjects, classes});
+});
 
+router.post('/exam-add', async(req, res) => {
+    const {title, classes, subjects, date} = req.body;
+    const d = new Date(date);
+    const formattedDate = moment(d).format("Do MMM YYYY");
+    try {
+        let exam = new Exam({title, classes, subjects, startDate: d, date: formattedDate});
+        exam = await exam.save();
+        res.redirect('/admin/exams');
+    } catch (e) {
+        console.log(e);
+        res.redirect('back');
+    }
+});
 
+// get All Exam Details
+router.get('/exams', async (req, res) => {
+    try {
+        let exams = await Exam.find().sort({startDate: 1}).populate('subjects').populate('classes');
+        res.render('admin/exams', {exams, currentDate: new Date});
+    } catch (e) {
+        console.log(e);
+        res.redirect('back');
+    }
+});
 module.exports = router
