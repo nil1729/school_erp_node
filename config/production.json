@@ -1,6 +1,0 @@
-{
-    "googleClientID": "74931542198-a3ht4og18eo2m5uebrci0qdgatip345i.apps.googleusercontent.com",
-    "googleClientSecret": "RHxHnTDIunsU0EPaXuuzvy7x",
-    "mongoURI": "mongodb+srv://nilanjan:nilanjan@school-lms-eplxo.mongodb.net/test?retryWrites=true&w=majority",
-    "sessionSecret": "c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e"
-}
