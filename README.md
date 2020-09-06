@@ -1,7 +1,7 @@
 <div align="center">
     <div style='display: flex; justify-content: center; align-items: center; font-size: 1.2rem; font-weight: bold'> 
-        <img src="https://pngimage.net/wp-content/uploads/2018/05/crm-icon-png-1.png" style="width: 50px" alt="School ERP">
-        <span style="margin-left: 1rem;"> 
+        <!-- <img src="https://pngimage.net/wp-content/uploads/2018/05/crm-icon-png-1.png" style="width: 50px; height: 50px;" alt="School ERP">
+        <span style="margin-left: 1rem;">  -->
         School ERP Portal 
     </div>
    
@@ -10,14 +10,16 @@
    <br />
    <br />
    <a href="#"><img alt="Version" src="https://img.shields.io/badge/version-1-green?style=flat"></a>
-   <a href="https://github.com/HarshKapadia2/attendance_management/blob/master/CONTRIBUTING.md"><img alt="Contributions Welcome" src="https://img.shields.io/badge/contributions-welcome-green?style=flat"></a>
+   <a href="https://github.com/nil1729/school_erp_node"><img alt="Contributions Welcome" src="https://img.shields.io/badge/contributions-welcome-green?style=flat"></a>
    <br />
    <br />
-   <b>Hosted at </b><a href="https://attendance-management-flask.herokuapp.com/"><b>https://attendance-management-flask.herokuapp.com/</b></a>
+   <b>Hosted at </b><a href="https://school--erp.herokuapp.com/">Heroku</a> and Using MongoDB Atlas for Database
    <br />
-    ***Use this Admin Credentials to See Demo***
+    <p>
+    Use this Admin Credentials to See Demo
         <br>Email Adress: admin@gmail.com
-        <br>Password: 123456 
+        <br>Password: 123456
+    </p>    
    <br />
    <br />
    For any suggestion(s) or/and problem(s), please do not hesitate to open an <a href="https://github.com/nil1729/attendance_management/issues">issue</a>!
@@ -28,13 +30,17 @@
 ## ***Functionalities***
 
 - Admin's functionalities
-   - Give attendance to all students as per entered date.
-   - On the dashboard, see the number of lectures conducted (by the teacher) and all students in the division in a table with their
-      - Roll number
-      - Name
-      - Attendance percentage
-      - Number of lectures attended by the student
-      - Dates on which the student attended and didn't attend the lectures
+   - **Add Teacher**
+     - Single Teacher Add
+     - Multiple Teacher Add via CSV
+   - **Add Students**
+     - Single Student Add
+     - Multiple Students add via CSV
+   - **Add Subjects**
+   - **Schedule Exams**
+   - **Classes Management**
+     - Assign Teacher to a Class
+     - Add Students to a Class
 
 ## ***TODO Functionalities***
     1. Students Functionalities
