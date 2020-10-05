@@ -42,6 +42,14 @@
      - Assign Teacher to a Class
      - Add Students to a Class
 
+## ***Steps to add google login***
+
+- Add clientId and secret in config
+- add callback url
+- https://console.developers.google.com/ use this site and refer any medium to article to generate clientId and secret
+
+
+
 ## ***TODO Functionalities***
     1. Students Functionalities
     2. Teachers Functionalities
