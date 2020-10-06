@@ -72,4 +72,9 @@ router.post('/change-password', checkAuthentication, async (req, res) => {
     }
 });
 
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'], accessType: 'offline', prompt: 'consent' }));
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+  return res.redirect('/admin');
+});
+
 module.exports = router;
