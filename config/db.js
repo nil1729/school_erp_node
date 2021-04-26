@@ -3,7 +3,7 @@ const config = require('config');
 
 module.exports = async () => {
     try {
-        await mongoose.connect(config.get('mongoURI'), {
+        await mongoose.connect(process.env.MONGO_URI, {
             useCreateIndex: true,
             useNewUrlParser: true,
             useUnifiedTopology: true,
