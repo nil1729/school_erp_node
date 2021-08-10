@@ -7,7 +7,7 @@ module.exports = async (passport) => {
 	passport.use(
 		new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
 			try {
-				const user = await User.findOne({ email });
+				const user = await User.findOne({ email }, { password: 1, email: 1 });
 				if (!user) {
 					return done(null, false, { message: 'Authentication Error' });
 				}
